@@ -11,18 +11,31 @@ const {
   putUserProfile,
   postAuthUser,
   postLogoutUser,
-} = require("../controllers/UserController");
+  postUserSignin,
+} = require("../controllers/userController");
+const { tokenChecker } = require("../Middlewares/TokenChecker");
 
 const userRouter = Router();
 
 userRouter.post("/user/singup", postUserSignupValidator(), postUserSignup);
-userRouter.post(
-  "/user/singin",
-  postUserSigninValidator(),
-  postUserSigninValidator
+userRouter.post("/user/singin", postUserSigninValidator(), postUserSignin);
+userRouter.put(
+  "/user/profile",
+  tokenChecker,
+  putUserProfileValidator(),
+  putUserProfile
 );
-userRouter.put("/user/profile", putUserProfileValidator(), putUserProfile);
-userRouter.post("/user/auth", postAuthUserValidator(), postAuthUser);
-userRouter.post("/user/logout", postLogoutUserValidator(), postLogoutUser);
+userRouter.post(
+  "/user/auth",
+  tokenChecker,
+  postAuthUserValidator(),
+  postAuthUser
+);
+userRouter.post(
+  "/user/logout",
+  tokenChecker,
+  postLogoutUserValidator(),
+  postLogoutUser
+);
 
 module.exports = userRouter;

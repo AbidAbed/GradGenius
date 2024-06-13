@@ -1,6 +1,7 @@
 const { Joi, Segments, celebrate, errors } = require("celebrate");
 
 const stringValidationChain = Joi.string().not().empty();
+
 function postUserSignupValidator() {
   return celebrate({
     [Segments.BODY]: Joi.object().keys({
@@ -24,9 +25,11 @@ function postUserSigninValidator() {
 
 function putUserProfileValidator() {
   return celebrate({
-    [Segments.HEADERS]: Joi.object().keys({
-      authorization: stringValidationChain.required(),
-    }),
+    [Segments.HEADERS]: Joi.object()
+      .keys({
+        authorization: stringValidationChain.required(),
+      })
+      .unknown(true),
     [Segments.BODY]: Joi.object().keys({
       email: stringValidationChain.email().optional(),
       password: stringValidationChain.min(8).optional(),
@@ -39,17 +42,21 @@ function putUserProfileValidator() {
 
 function postLogoutUserValidator() {
   return celebrate({
-    [Segments.HEADERS]: Joi.object().keys({
-      authorization: stringValidationChain.required(),
-    }),
+    [Segments.HEADERS]: Joi.object()
+      .keys({
+        authorization: stringValidationChain.required(),
+      })
+      .unknown(true),
   });
 }
 
 function postAuthUserValidator() {
   return celebrate({
-    [Segments.HEADERS]: Joi.object().keys({
-      authorization: stringValidationChain.required(),
-    }),
+    [Segments.HEADERS]: Joi.object()
+      .keys({
+        authorization: stringValidationChain.required(),
+      })
+      .unknown(true),
   });
 }
 

@@ -4,9 +4,11 @@ const stringValidationChain = Joi.string().not().empty();
 
 function postProjectValidator() {
   return celebrate({
-    [Segments.HEADERS]: Joi.object().keys({
-      authorization: stringValidationChain.required(),
-    }),
+    [Segments.HEADERS]: Joi.object()
+      .keys({
+        authorization: stringValidationChain.required(),
+      })
+      .unknown(true),
     [Segments.BODY]: Joi.object().keys({
       name: stringValidationChain.required().min(4),
       ownerUserId: stringValidationChain.required(),
@@ -17,9 +19,11 @@ function postProjectValidator() {
 
 function getProjectValidator() {
   return celebrate({
-    [Segments.HEADERS]: Joi.object().keys({
-      authorization: stringValidationChain.required(),
-    }),
+    [Segments.HEADERS]: Joi.object()
+      .keys({
+        authorization: stringValidationChain.required(),
+      })
+      .unknown(true),
     [Segments.QUERY]: Joi.object().keys({
       projectId: stringValidationChain.required(),
     }),
@@ -28,9 +32,11 @@ function getProjectValidator() {
 
 function getProjectsValidator() {
   return celebrate({
-    [Segments.HEADERS]: Joi.object().keys({
-      authorization: stringValidationChain.required(),
-    }),
+    [Segments.HEADERS]: Joi.object()
+      .keys({
+        authorization: stringValidationChain.required(),
+      })
+      .unknown(true),
     [Segments.QUERY]: Joi.object().keys({
       page: Joi.number().required().min(1),
     }),
