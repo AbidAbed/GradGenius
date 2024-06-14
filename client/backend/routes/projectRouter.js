@@ -9,11 +9,24 @@ const {
   getProjectValidator,
   getProjectsValidator,
 } = require("../validators/projectValidator");
+const { tokenChecker } = require("../Middlewares/TokenChecker");
 
 const projectRouter = Router();
 
-projectRouter.post("/project", postProjectValidator(), postProject);
-projectRouter.get("/project", getProjectValidator(), getProject);
-projectRouter.get("/projects", getProjectsValidator(), getProjects);
+projectRouter.post(
+  "/project",
+  tokenChecker,
+  (req, res) => postProjectValidator(req, res),
+  postProject
+);
+
+projectRouter.get("/project", tokenChecker, getProjectValidator(), getProject);
+
+projectRouter.get(
+  "/projects",
+  tokenChecker,
+  getProjectsValidator(),
+  getProjects
+);
 
 module.exports = projectRouter;

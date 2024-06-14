@@ -2,7 +2,12 @@ const { Joi, Segments, celebrate, errors } = require("celebrate");
 
 const stringValidationChain = Joi.string().not().empty();
 
-function postProjectValidator() {
+function postProjectValidator(req,res) {
+
+  console.log(req);
+  const currentDate = new Date(Date.now());
+  const minDate = new Date(currentDate.setMonth(currentDate.getMonth() + 1));
+
   return celebrate({
     [Segments.HEADERS]: Joi.object()
       .keys({
@@ -11,8 +16,9 @@ function postProjectValidator() {
       .unknown(true),
     [Segments.BODY]: Joi.object().keys({
       name: stringValidationChain.required().min(4),
-      ownerUserId: stringValidationChain.required(),
-      file: Joi.required().not().empty(),
+      deadline: Joi.number().required().min(minDate.getTime()),
+      teamSize: Joi.number().required(),
+      isWithDocumentation: Joi.boolean().required(),
     }),
   });
 }
