@@ -13,6 +13,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(morgan("dev"));
 app.use(mainRouter);
+app.use(express.static(process.env.PUBLIC_FOLDER_PATH));
 
 mongoose
   .connect(process.env.DB_URL)

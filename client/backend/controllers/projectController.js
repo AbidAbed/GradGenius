@@ -3,7 +3,30 @@ const User = require("../models/User");
 
 async function postProject(request, response) {
   try {
-  } catch (err) {}
+    // console.log(5000);
+    const { name, deadline, teamSize, isWithDocumentation } = request.body;
+    const createdProject = await Project.create({
+      name,
+      deadline,
+      teamSize,
+      isWithDocumentation,
+      documentationFileName: isWithDocumentation ? request.file.filename : null,
+      ownerUserId: request.authedUser._id,
+    });
+
+    const updatedUser = await User.findByIdAndUpdate(
+      request.authedUser._id,
+      {
+        $push: { projectsIds: createdProject._doc._id },
+      },
+      { returnDocument: "after" }
+    ).select("-password");
+
+    response.status(200).send({ ...createdProject._doc });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send();
+  }
 }
 
 async function getProject(request, response) {
@@ -11,7 +34,7 @@ async function getProject(request, response) {
     const user = await User.findById(request.authedUser._id);
 
     const isProjectBelongsToUser = user.projectsIds.find(
-      (id) => id === request.query.projectId
+      (id) =>  id.toString() === request.query.projectId
     );
 
     if (!isProjectBelongsToUser) {
@@ -29,6 +52,7 @@ async function getProject(request, response) {
     response.status(200).send({ ...project._doc });
   } catch (err) {
     response.status(500).send();
+    console.log(err);
   }
 }
 

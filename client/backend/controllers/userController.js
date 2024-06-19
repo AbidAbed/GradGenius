@@ -6,7 +6,7 @@ const { addTokenToBlackList } = require("../Middlewares/TokenChecker");
 
 async function postUserSignup(request, response) {
   try {
-    const { password, ...res } = request.body;
+    const { password, ...restUserObject } = request.body;
 
     const hashedPassword = await bcrypt.hash(
       password,
@@ -14,7 +14,7 @@ async function postUserSignup(request, response) {
     );
 
     const createdUser = await User.create({
-      ...res,
+      ...restUserObject,
       password: hashedPassword,
     });
 

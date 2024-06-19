@@ -8,15 +8,18 @@ const {
   postProjectValidator,
   getProjectValidator,
   getProjectsValidator,
+  postProjectValidatorUpload,
 } = require("../validators/projectValidator");
 const { tokenChecker } = require("../Middlewares/TokenChecker");
-
+const { documentaionFile } = require("../middlewares/DocumentationFileUpload");
 const projectRouter = Router();
 
 projectRouter.post(
   "/project",
   tokenChecker,
-  (req, res) => postProjectValidator(req, res),
+  documentaionFile,
+  postProjectValidator,
+  postProjectValidatorUpload,
   postProject
 );
 

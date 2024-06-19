@@ -5,6 +5,7 @@ let blacklistTokens = {};
 
 async function tokenChecker(request, response, next) {
   try {
+    // console.log(3);
     request.authedUser = null;
 
     const tokenReceived = request.headers.authorization;
@@ -26,6 +27,7 @@ async function tokenChecker(request, response, next) {
 
       if (user) {
         request.authedUser = { ...user._doc };
+        // console.log(2);
         next();
       }
     } else {
@@ -33,7 +35,9 @@ async function tokenChecker(request, response, next) {
       return;
     }
   } catch (err) {
-    response.status(401).send();
+    if (err.message.includes("jwt")) response.status(401).send();
+    else response.status(500).send();
+    console.log(Object.entries(err));
   }
 }
 
@@ -47,4 +51,8 @@ function removeTokensFromBlackList() {
 
 setInterval(removeTokensFromBlackList, 60 * 60 * 1000);
 
-module.exports = { tokenChecker, addTokenToBlackList, blacklistTokens };
+module.exports = {
+  blacklistTokens,
+  tokenChecker,
+  addTokenToBlackList,
+};

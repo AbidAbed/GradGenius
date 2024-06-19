@@ -6,7 +6,6 @@ const {
   errors,
   isCelebrateError,
 } = require("celebrate");
-
 const userRouter = require("./userRouter");
 const projectRouter = require("./projectRouter");
 
@@ -16,6 +15,7 @@ mainRouter.use(userRouter);
 mainRouter.use(projectRouter);
 
 async function errorHandler(err, req, res, next) {
+  console.log(err);
   if (!isCelebrateError(err)) {
     return next(err);
   }
