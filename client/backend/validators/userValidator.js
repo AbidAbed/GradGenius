@@ -19,6 +19,7 @@ function postUserSigninValidator() {
     [Segments.BODY]: Joi.object().keys({
       email: stringValidationChain.email().required(),
       password: stringValidationChain.min(8).required(),
+      otp_code: stringValidationChain.required().length(6),
     }),
   });
 }

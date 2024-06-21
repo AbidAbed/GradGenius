@@ -3,12 +3,24 @@ import {setupListeners} from '@reduxjs/toolkit/query';
 import {UserSlice} from './slices/UserSlice';
 import {ProjectsSlices} from './slices/ProjectSlice';
 import {ProjectsApi} from './apis/ProjectApi';
-import {UserApi} from './apis/UserApi';
+import {
+  UserApi,
+  useAuthUserMutation,
+  usePostLoginMutation,
+  usePostSignupMutation,
+} from './apis/UserApi';
+import {
+  ConfigSlice,
+  changeIsLoggedIn,
+  changePath,
+  changeToken,
+} from './slices/ConfigSlice';
 
 const store = configureStore({
   reducer: {
     user: UserSlice.reducer,
     projects: ProjectsSlices.reducer,
+    config: ConfigSlice.reducer,
     [ProjectsApi.reducerPath]: ProjectsApi.reducer,
     [UserApi.reducerPath]: UserApi.reducer,
   },
@@ -20,4 +32,12 @@ const store = configureStore({
 
 setupListeners(store.dispatch);
 
-export {store};
+export {
+  store,
+  changeIsLoggedIn,
+  changePath,
+  changeToken,
+  useAuthUserMutation,
+  usePostLoginMutation,
+  usePostSignupMutation,
+};

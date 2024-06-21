@@ -1,4 +1,4 @@
-import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query';
+import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
 import {BASE_BACKEND_URL} from '@env';
 const ProjectsApi = createApi({
   reducerPath: 'ProjectsApi',
