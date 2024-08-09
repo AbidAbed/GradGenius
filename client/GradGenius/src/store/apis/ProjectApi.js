@@ -4,8 +4,19 @@ const ProjectsApi = createApi({
   reducerPath: 'ProjectsApi',
   baseQuery: fetchBaseQuery({baseUrl: `${BASE_BACKEND_URL}`}),
   endpoints(builder) {
-    return {};
+    return {
+      getProjects: builder.query({
+        query: requestData => {
+          return {
+            method: 'GET',
+            url: '/projects',
+            headers: {authorization: requestData.token},
+            params: {page: requestData.page},
+          };
+        },
+      }),
+    };
   },
 });
-
-export {ProjectsApi};
+const {useGetProjectsQuery} = ProjectsApi;
+export {ProjectsApi, useGetProjectsQuery};

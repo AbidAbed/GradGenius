@@ -5,7 +5,7 @@ import {
   NativeViewGestureHandler,
   ScrollView,
 } from 'react-native-gesture-handler';
-import {View, Text} from 'react-native';
+import {View, Text, ActivityIndicator, Modal} from 'react-native';
 import {TextInput, IconButton, Button, Drawer} from 'react-native-paper';
 import EyeSecure from 'react-native-vector-icons/Feather';
 
@@ -92,6 +92,17 @@ function Form({
           justifyContent: 'center',
           padding: '3%',
         }}>
+        <Modal visible={isLoading} transparent={true}>
+          <View
+            style={{
+              height: '100%',
+              width: '100%',
+              backgroundColor: 'rgba(0, 0, 0, 0.2)',
+              justifyContent: 'center',
+            }}>
+            <ActivityIndicator color={'#181819'} size={'large'} />
+          </View>
+        </Modal>
         {Object.values(configFormObjectState).map(configElement => {
           // console.log(configElement);
           return (
@@ -156,7 +167,8 @@ function Form({
               </View>
               {configElement.isValidationError && (
                 <View style={{paddingLeft: '2%'}}>
-                  <Text style={{color: '#8d0000', textAlign: 'left', fontSize: 12}}>
+                  <Text
+                    style={{color: '#8d0000', textAlign: 'left', fontSize: 12}}>
                     {configElement.validationError}
                   </Text>
                 </View>
@@ -164,6 +176,14 @@ function Form({
             </View>
           );
         })}
+        {children}
+        {responseErrorState !== '' && (
+          <View style={{paddingLeft: '2%'}}>
+            <Text style={{color: '#8d0000', textAlign: 'left', fontSize: 12}}>
+              {responseErrorState}
+            </Text>
+          </View>
+        )}
         <View style={{paddingTop: '2%'}}>
           <Button
             loading={isLoadingForm}
@@ -173,15 +193,6 @@ function Form({
             onPress={() => submit()}>
             {submitText}
           </Button>
-
-          {responseErrorState !== '' && (
-            <View style={{paddingLeft: '2%'}}>
-              <Text style={{color: '#8d0000', textAlign: 'left', fontSize: 12}}>
-                {responseErrorState}
-              </Text>
-            </View>
-          )}
-          {children}
         </View>
       </ScrollView>
     </GestureHandlerRootView>

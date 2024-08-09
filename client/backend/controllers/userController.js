@@ -59,7 +59,7 @@ async function postUserSignup(request, response) {
     response.status(200).send({ ...savedUser._doc });
   } catch (err) {
     if (err.errorResponse.errmsg.includes("duplicate key error"))
-      response.status(404).send();
+      response.status(400).send();
     else response.status(500).send();
   }
 }

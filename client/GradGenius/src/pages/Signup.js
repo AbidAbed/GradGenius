@@ -63,18 +63,18 @@ function Signup() {
             justifyContent: 'center',
             backgroundColor: '#F2F2F2',
           }}>
-          <Button
-            icon="close-thick"
-            mode="contained"
-            style={{
-              position: 'absolute',
-              top: 10,
-              right: 0,
-              backgroundColor: '#616162',
-            }}
-            onPress={() => setIsShowSecretKeyModal(false)}>
-            Close
-          </Button>
+          <View style={{paddingTop: '2%', paddingRight: '3%'}}>
+            <Button
+              icon="close-thick"
+              mode="contained"
+              style={{
+                backgroundColor: '#616162',
+                alignSelf: 'flex-end',
+              }}
+              onPress={() => setIsShowSecretKeyModal(false)}>
+              Close
+            </Button>
+          </View>
           <View style={{justifyContent: 'center', alignItems: 'center'}}>
             <Text style={{textAlign: 'center', color: 'black', fontSize: 20}}>
               Your account was created successfully.{'\n'}

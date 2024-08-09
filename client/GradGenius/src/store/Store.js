@@ -1,8 +1,8 @@
 import {configureStore} from '@reduxjs/toolkit';
 import {setupListeners} from '@reduxjs/toolkit/query';
 import {UserSlice} from './slices/UserSlice';
-import {ProjectsSlices} from './slices/ProjectSlice';
-import {ProjectsApi} from './apis/ProjectApi';
+import {ProjectsSlices, addProjects} from './slices/ProjectSlice';
+import {ProjectsApi, useGetProjectsQuery} from './apis/ProjectApi';
 import {
   UserApi,
   useAuthUserMutation,
@@ -40,4 +40,6 @@ export {
   useAuthUserMutation,
   usePostLoginMutation,
   usePostSignupMutation,
+  useGetProjectsQuery,
+  addProjects,
 };
